@@ -1,7 +1,0 @@
-[1] Stepping through the start of the algorithm for this string, you can see that in the first pass through the loop,
-a check is performed to see if the string "^W" is in the table. Since it isn't, the code for '^' is output, and the string "^W" is
-added to the table. Since we have 256 characters already defined for codes 0-255, the first string definition can be assigned to code
-256. After the third letter, 'E', has been read in, the second string code "WE" is added to the table and the code for letter 'W' is
-output. This continues until in the second word, the characters '^' and 'W' are read in, matching string number 256. In this case, the
-code 256 is output, and a three character string is added to the string table.
-The process continues until the string is exhausted and all of the codes have been output.
