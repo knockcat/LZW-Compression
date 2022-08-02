@@ -201,8 +201,8 @@ void append(string str)
         cout << ind;
         vj.close();
     }
-    vs << ind <<endl;  // content
-    vs<<"#"<<endl;
+    vs << ind;  // content
+    vs<<"#";
     vs.close();
 }
 
@@ -226,12 +226,17 @@ void depart()
             aps = "";
         }
     }
-    fstream vj;
+    
     for (int i = 0; i < bcom.size(); ++i)
     {
-        string str = "";
-        vj.open(bcom[i]);
+        ofstream vj;
+        const char * fileName;
 
+        // fileName = (bcom[i] + to_string(i)).c_str();
+         fileName = bcom[i].c_str();
+        
+        vj.open(fileName);
+        
         if (!vj)
         {
             cout << "Error in creating file!!!";
@@ -267,7 +272,7 @@ int main(int argc, char *argv[])
         {
             vs << argv[i] << endl;
         }
-        vs << '#'<<endl;
+        vs << '#';
         vs.close();
         for (int i = 2; i < argc; i++)
         {
