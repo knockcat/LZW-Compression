@@ -5,8 +5,6 @@
 #include <vector>
 using namespace std;
 
-vector<string> bcom;
-
 void print(string str)
 {
     fstream vj;
@@ -209,41 +207,50 @@ void append(string str)
 }
 
 // this will transfer data to seperat files
+// this will transfer data to seperat files
 void depart()
 {
-
-    fstream vj;
     // vs.open("encode.txt"); // file open
-    fstream vs("encode.txt",fstream::in);
-
+    fstream vs("encode.txt", fstream::in);
+    vector<string> bcom;
     char ch;
+    string aps = "";
+    while (vs >> noskipws >> ch)
+    {
+        if (ch == '#')
+            break;
+        aps += ch; // extracting file name
+        if (ch == '\n')
+        {
+            bcom.push_back(aps);
+            aps = "";
+        }
+    }
+    fstream vj;
     for (int i = 0; i < bcom.size(); ++i)
     {
         string str = "";
         vj.open(bcom[i]);
+
+        if (!vj)
+        {
+            cout << "Error in creating file!!!";
+        }
         while (vs >> noskipws >> ch)
         {
-            if(ch == '#')
+            if (ch == '#')
             {
                 vj.close();
                 break;
             }
             else
                 vj << ch;
-            /*getline(vs,str);
-            vs >> ch;
-            cout<<ch<<" ";
-            if (ch == '#')
-            {
-                vj.close();
-                break;
-                // vs >> ch;
-            }
-            else
-                vj << ch;*/
         }
     }
     vs.close();
+    cout << "Content of bcom" << endl;
+    for (int i = 0; i < bcom.size(); ++i)
+        cout << i << " " << bcom[i];
 }
 
 int main(int argc, char *argv[])
@@ -253,31 +260,30 @@ int main(int argc, char *argv[])
     
     if (command == "-c")
     {
-        fstream vj, vs;
-        string ind;
+        fstream cvj, vs;
+        string ind ;
         vs.open("encode.txt", std::ios_base::app); // file open
-        for(int i=2;i<argc;i++)
+        for (int i = 2; i < argc; i++)
         {
-            vs<<argv[i]<<endl;
+            vs << argv[i] << endl;
         }
-        vs<<'#'<<endl;
+        vs << '#'<<endl;
         vs.close();
         for (int i = 2; i < argc; i++)
         {
             string str = argv[i];
-            
-            
             append(str);
-            
         }
         encoding("encode.txt");
     }
     else if (command == "-d")
     {
-        cout<<"chala";
+        // cout << "Decoding" << endl;
         string str = argv[2];
-        
+
         decoding(str);
+        
+        depart();
     }
 
     return 0;
